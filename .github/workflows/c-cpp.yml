@@ -85,5 +85,5 @@ jobs:
       with:
         name: rtlsdr-bin-w64_dlldep
         path: |
-          rtlsdr-bin-w64_dlldep/bin/
-          !rtl_test.*
+          rtlsdr-bin-w64_dlldep/bin/*
+          !rtl_test.exe
