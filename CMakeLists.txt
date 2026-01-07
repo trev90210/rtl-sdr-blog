@@ -58,8 +58,8 @@ include(Version) # setup version info
 ########################################################################
 
 configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/rtl_app_ver.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/src/rtl_app_ver.h
+#    ${CMAKE_CURRENT_SOURCE_DIR}/src/rtl_app_ver.h.in
+#    ${CMAKE_CURRENT_BINARY_DIR}/src/rtl_app_ver.h
     @ONLY )
 
 
