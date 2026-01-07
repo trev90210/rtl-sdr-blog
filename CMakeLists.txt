@@ -57,10 +57,10 @@ include(Version) # setup version info
 # Version defines to include in library and tools
 ########################################################################
 
-configure_file(
+#configure_file(
 #    ${CMAKE_CURRENT_SOURCE_DIR}/src/rtl_app_ver.h.in
 #    ${CMAKE_CURRENT_BINARY_DIR}/src/rtl_app_ver.h
-    @ONLY )
+#    @ONLY )
 
 
 if(PROVIDE_UDP_SERVER)
