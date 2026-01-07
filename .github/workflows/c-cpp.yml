@@ -63,7 +63,7 @@ jobs:
     - name: build_w64_dlldep
       run: bash ./cross_build_mingw64.sh dlldep
     - name: list
-      run: ls -lashR rtlsdr-bin-w64_dlldep/bin/
+      run: ls -lashR rtlsdr-bin-w64_dlldep
 
     - name: 'upload w32 static artifact'
       uses: actions/upload-artifact@v4
