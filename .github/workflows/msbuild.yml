@@ -82,7 +82,7 @@ jobs:
           msbuild msvc/libusb.sln `
                 /m `
                 -property:Configuration=Release `
-                -property:Platform=Win32
+                -property:Platform=x64
 
     - name: List libusb
       run: |
