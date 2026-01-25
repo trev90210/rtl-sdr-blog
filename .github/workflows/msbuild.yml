@@ -46,7 +46,7 @@ jobs:
           echo "********************************************"
           ls
           echo "********************************************"
-          ls -Recurse -Exclude ".git" -Path "${{ runner.workspace }}"
+          ls -Path "${{ github.workspace }}"
           echo "********************************************"
           #ls -Recurse -Exclude ".git" -Path "${{ github.workspace }}/pthread-win32" 
           #echo "********************************************"
@@ -67,11 +67,11 @@ jobs:
     - name: List pthread
       run: |
           echo "********************************************"
-          ls -Recurse -Exclude ".git" 
+          ls ".git" 
           echo "********************************************"
-          ls -Recurse -Exclude ".git" -Path  "${{ github.workspace }}"
+          ls -Recurse -Exclude ".git" -Path  "${{ github.workspace }}/pthread-win32"
           echo "********************************************"
-          ls -Path  "${{ runner.workspace }}" 
+          ls -Path "${{ github.workspace }}" 
         
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
@@ -88,8 +88,8 @@ jobs:
       run: |
           echo "********************************************"
           ls -Recurse -Exclude ".git" 
-          ls -Recurse -Exclude ".git" -Path  ..
-          ls -Recurse -Exclude ".git" -Path  ../..
+          ls -Path  ..
+          ls -Path  ../..
           echo "********************************************"
           cd ..
 
@@ -103,8 +103,8 @@ jobs:
         cmake -B build -S .. -A x64 -DCMAKE_BUILD_TYPE=Release `
               -DLIBUSB_LIBRARIES=${{github.workspace}}/libusb/build/v143/x64/Release/lib/libusb-1.0.lib `
               -DLIBUSB_INCLUDE_DIRS=${{github.workspace}}/libusb `
-              -DTHREADS_PTHREADS_INCLUDE_DIR=${{github.workspace}}/pthreads/lib `
-              -DTHREADS_PTHREADS_LIBRARY=${{github.workspace}}/pthreads/pthread-win32/static/lib/pthreadVC2.lib 
+              -DTHREADS_PTHREADS_INCLUDE_DIR=${{github.workspace}}/pthread-win32/lib `
+              -DTHREADS_PTHREADS_LIBRARY=${{github.workspace}}/pthread-win32/shared/lib/pthreadVC3.lib 
 
     - name: List rtlsdr 1
       run: |
