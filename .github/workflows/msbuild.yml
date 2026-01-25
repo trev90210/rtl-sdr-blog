@@ -77,9 +77,9 @@ jobs:
       uses: microsoft/setup-msbuild@v2
 
     - name: libusb Configure Visual Studio and CMake
-      working-directory: ${{github.workspace}}
+      working-directory: ${{github.workspace}}/libusb
       run: |
-          msbuild libusb/msvc/libusb.sln `
+          msbuild msvc/libusb.sln `
                 /m `
                 -property:Configuration=Release `
                 -property:Platform=Win32
@@ -87,9 +87,7 @@ jobs:
     - name: List libusb
       run: |
           echo "********************************************"
-          ls -Recurse -Exclude ".git" 
-          ls -Path  ..
-          ls -Path  ../..
+          ls -Recurse -Exclude ".git"  -Path "${{ github.workspace }}/libusb"
           echo "********************************************"
           cd ..
 
