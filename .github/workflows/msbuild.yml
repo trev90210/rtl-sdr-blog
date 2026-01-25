@@ -1,0 +1,154 @@
+name: msbuild 
+
+on:
+  workflow_dispatch:
+  # Trigger the workflow on push or pull request - but only for the main branch
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - 'v*'
+  pull_request:
+    branches:
+      - master
+
+defaults:
+  run:
+    shell: PowerShell
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+  build-on-windows:
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    # windows-latest or windows-2022 fail!?
+    runs-on: windows-2025
+
+    steps:
+    - name: install
+      run: |
+          choco install wget innoextract --no-progress
+
+
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
+
+    - name: Clone dependencies
+      working-directory: ${{ github.workspace }}
+      run: |
+          cd "${{ github.workspace }}"
+          git clone https://github.com/libusb/libusb libusb
+          git clone https://github.com/GerHobbelt/pthread-win32 pthread-win32
+          echo "********************************************"
+          ls
+          echo "********************************************"
+          ls -Recurse -Exclude ".git" -Path "${{ runner.workspace }}"
+          echo "********************************************"
+          #ls -Recurse -Exclude ".git" -Path "${{ github.workspace }}/pthread-win32" 
+          #echo "********************************************"
+          #ls -Recurse -Exclude ".git" -Path "${{ github.workspace }}/libusb"
+          #echo "********************************************"
+          #ls -Recurse -Exclude ".git" -Path "${{ github.workspace }}"
+          #echo "********************************************"
+    - name: Build pthread-win32
+      working-directory: ${{ github.workspace }}
+      run: |
+          cd pthread-win32
+          cmake -B "${{github.workspace}}/pthread-win32/static" `
+                -DBUILD_SHARED_LIBS=OFF `
+                -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/pthread-win32/static"
+          cmake --build "${{github.workspace}}/pthread-win32/static" `
+                --config Release `
+                --target install
+          echo "********************************************"
+          ls -Recurse -Exclude ".git" 
+          echo "********************************************"
+          ls -Recurse -Exclude ".git" -Path  "${{ github.workspace }}"
+          echo "********************************************"
+          ls -Path  "${{ runner.workspace }}" 
+        
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: libusb Configure Visual Studio and CMake
+      working-directory: ${{github.workspace}}
+      run: |
+          msbuild libusb/msvc/libusb.sln `
+                /m `
+                -property:Configuration=Release `
+                -property:Platform=Win32
+
+          echo "********************************************"
+          echo "dir /s"
+          ls -Recurse -Exclude ".git" 
+          ls -Recurse -Exclude ".git" -Path  ..
+          ls -Recurse -Exclude ".git" -Path  ../..
+          echo "********************************************"
+          cd ..
+
+
+
+    - name: RTL-SDR build
+      run: |
+        mkdir ${{github.workspace}}/build
+        ## cd ${{github.workspace}}/build
+        ls
+        cmake -B build -S .. -A x64 -DCMAKE_BUILD_TYPE=Release `
+              -DLIBUSB_LIBRARIES=${{github.workspace}}/libusb/build/v143/x64/Release/lib/libusb-1.0.lib `
+              -DLIBUSB_INCLUDE_DIRS=${{github.workspace}}/libusb `
+              -DTHREADS_PTHREADS_INCLUDE_DIR=${{github.workspace}}/pthreads/lib `
+              -DTHREADS_PTHREADS_LIBRARY=${{github.workspace}}/pthreads/pthread-win32/static/lib/pthreadVC2.lib 
+
+        ls -Recurse
+        ## cd ..
+        cmake --build build --parallel 1 --config Release
+        echo "*********************************************"
+        cmake --install build --prefix ${{github.workspace}}/dist --config Release
+        ###echo "* ${{github.workspace}} : `git show --format='%h (%s, %as)' --no-patch`" >> ${{github.workspace}}/release_notes.md
+
+    - name: List
+      run: |
+          ## cat "${{ github.workspace }}/build/src/cmake_install.cmake"
+          ls -Path "${{ github.workspace }}"
+          ls -Recurse -Path "${{ github.workspace }}/build"
+          ls -Recurse -Exclude ".git" -Path "${{ github.workspace }}"
+          cat "${{ github.workspace }}/build\src\rtlsdr.vcxproj"
+    
+
+    #- name: Dir Listing
+    #  working-directory: ${{runner.workspace}}
+    #  shell: bash
+    #  run: find . >src_listing.txt
+
+    - name: Collect files to distribute
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: |
+        #cp "${{github.workspace}}/ExtIO_RTL/README.md" ./
+        #cp "${{github.workspace}}/ExtIO_RTL/COPYING" ./LICENSE
+        cp "${{github.workspace}}/Release/*" ./
+
+    - name: package and upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: librtlsdr
+        path: |
+            ${{github.workspace}}/ExtIO_RTL.dll
+            ${{github.workspace}}/README.md
+            ${{github.workspace}}/LICENSE
+
+
+
+
+
+
+
+
+
+
+
+
