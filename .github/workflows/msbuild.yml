@@ -64,6 +64,8 @@ jobs:
           cmake --build "${{github.workspace}}/pthread-win32/shared" `
                 --config Release `
                 --target install
+    - name: List pthread
+      run: |
           echo "********************************************"
           ls -Recurse -Exclude ".git" 
           echo "********************************************"
@@ -82,8 +84,9 @@ jobs:
                 -property:Configuration=Release `
                 -property:Platform=Win32
 
+    - name: List libusb
+      run: |
           echo "********************************************"
-          echo "dir /s"
           ls -Recurse -Exclude ".git" 
           ls -Recurse -Exclude ".git" -Path  ..
           ls -Recurse -Exclude ".git" -Path  ../..
@@ -92,7 +95,7 @@ jobs:
 
 
 
-    - name: RTL-SDR build
+    - name: RTL-SDR configure build
       run: |
         mkdir ${{github.workspace}}/build
         ## cd ${{github.workspace}}/build
@@ -103,8 +106,13 @@ jobs:
               -DTHREADS_PTHREADS_INCLUDE_DIR=${{github.workspace}}/pthreads/lib `
               -DTHREADS_PTHREADS_LIBRARY=${{github.workspace}}/pthreads/pthread-win32/static/lib/pthreadVC2.lib 
 
+    - name: List rtlsdr 1
+      run: |
         ls -Recurse
         ## cd ..
+
+    - name: cmake 
+      run: |
         cmake --build build --parallel 1 --config Release
         echo "*********************************************"
         cmake --install build --prefix ${{github.workspace}}/dist --config Release
