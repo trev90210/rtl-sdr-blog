@@ -58,10 +58,10 @@ jobs:
       working-directory: ${{ github.workspace }}
       run: |
           cd pthread-win32
-          cmake -B "${{github.workspace}}/pthread-win32/static" `
+          cmake -B "${{github.workspace}}/pthread-win32/shared" `
                 -DBUILD_SHARED_LIBS=OFF `
-                -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/pthread-win32/static"
-          cmake --build "${{github.workspace}}/pthread-win32/static" `
+                -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/pthread-win32/shared"
+          cmake --build "${{github.workspace}}/pthread-win32/shared" `
                 --config Release `
                 --target install
           echo "********************************************"
