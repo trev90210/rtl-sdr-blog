@@ -15,11 +15,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+message (STATUS "starting CMakeLists")
 ########################################################################
 # Project setup
 ########################################################################
 cmake_minimum_required(VERSION 3.7.2...4.2.0)
+
+
+
 
 # workaround for https://gitlab.kitware.com/cmake/cmake/issues/16967
 if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
