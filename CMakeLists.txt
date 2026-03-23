@@ -75,7 +75,7 @@ if(PKG_CONFIG_FOUND)
         set(LIBUSB_LIBRARIES "${LIBUSB_LINK_LIBRARIES}")
     endif()
 else()
-    set(LIBUSB_LIBRARIES "" CACHE STRING "manual libusb path")
+    set(LIBUSB_LIBRARIES "" CACHE STRING "${PROJECT_SOURCE_DIR}/mingw_libusb_${WN}/lib/libusb-1.0.a")
     set(LIBUSB_INCLUDE_DIRS "" CACHE STRING "manual libusb includepath")
 endif()
 
