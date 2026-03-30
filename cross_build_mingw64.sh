@@ -27,9 +27,11 @@ if /bin/true; then
     AR=${CROSS}-ar \
     RANLIB=${CROSS}-ranlib \
     ./configure --prefix=${REPO_DIR}/mingw_libusb_${WN} --host=${CROSS} --disable-shared && \
-  make && make install
+    make && make install
   echo -e "\n\nlisting of ${REPO_DIR}/mingw_libusb_${WN}"
   ls -lshR -I=debian ${REPO_DIR}/mingw_libusb_${WN}
+  echo -e "\n\nlisting of ${REPO_DIR}/libusb_${WN}"
+  ls -lshR -I=debian ${REPO_DIR}/libusb_${WN}
   echo -e "\nlisting of ${REPO_DIR}/mingw_libusb_${WN}/include"
   ls -lsh ${REPO_DIR}/mingw_libusb_${WN}/include
   echo -e "\nlisting of ${REPO_DIR}/mingw_libusb_${WN}/lib"
