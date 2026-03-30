@@ -45,7 +45,7 @@ if /bin/true; then
   echo -e "\n\n********************************************************"
   echo "start build of librtlsdr_${WN}"
   mkdir ${REPO_DIR}/build_${WN} && cd ${REPO_DIR}/build_${WN} && \
-    cmake --trace-expand --debug -DCMAKE_TOOLCHAIN_FILE=${REPO_DIR}/${TOOLCHAIN} \
+    cmake --trace-expand --debug-output -DCMAKE_TOOLCHAIN_FILE=${REPO_DIR}/${TOOLCHAIN} \
       -DCMAKE_INSTALL_PREFIX=${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST} \
       -DRTL_STATIC_BUILD=ON "$@"  \
       -DLIBUSB_INCLUDE_DIR=${REPO_DIR}/mingw_libusb_${WN}/include/libusb-1.0 \
