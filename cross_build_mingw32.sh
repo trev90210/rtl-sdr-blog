@@ -28,14 +28,14 @@ if /bin/true; then
     AR=${CROSS}-ar \
     RANLIB=${CROSS}-ranlib \
     ./configure --prefix=${REPO_DIR}/mingw_libusb_${WN} --host=${CROSS} --disable-shared && \
-    make && make install
-    echo -e "\n\nlisting of ${REPO_DIR}/mingw_libusb_${WN}"
-    ls -alh ${REPO_DIR}/mingw_libusb_${WN}
-    echo -e "\nlisting of ${REPO_DIR}/mingw_libusb_${WN}/include"
-    ls -alh ${REPO_DIR}/mingw_libusb_${WN}/include
-    echo -e "\nlisting of ${REPO_DIR}/mingw_libusb_${WN}/lib"
-    ls -alh ${REPO_DIR}/mingw_libusb_${WN}/lib
-    echo -e "\n"
+  make && make install
+  echo -e "\n\nlisting of ${REPO_DIR}/mingw_libusb_${WN}"
+  ls -lshR -I=debian ${REPO_DIR}/mingw_libusb_${WN}
+  echo -e "\nlisting of ${REPO_DIR}/mingw_libusb_${WN}/include"
+  ls -lsh ${REPO_DIR}/mingw_libusb_${WN}/include
+  echo -e "\nlisting of ${REPO_DIR}/mingw_libusb_${WN}/lib"
+  ls -lsh ${REPO_DIR}/mingw_libusb_${WN}/lib
+  echo -e "\n"
 fi
 
 # librtlsdr
