@@ -54,10 +54,10 @@ if /bin/true; then
       -DLIBUSB_LINK_LIBRARIES=${REPO_DIR}/mingw_libusb_${WN}/lib/libusb-1.0.a \
       ../  && \
     make && make install
-  echo "logs"
-  ls -lshR -I=debian ${REPO_DIR}
-  cat ${REPO_DIR}/build_${WN}/CMakeFiles/CMakeError.log
-  cat ${REPO_DIR}/build_${WN}/CMakeFiles/CMakeOutput.log
-  md5sum  ${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/* >${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/md5sums.txt
-  sha1sum ${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/* >${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/sha1sums.txt
+  # echo "logs"
+  # ls -lshR -I=debian ${REPO_DIR}
+  # cat ${REPO_DIR}/build_${WN}/CMakeFiles/CMakeError.log
+  # cat ${REPO_DIR}/build_${WN}/CMakeFiles/CMakeOutput.log
+  # md5sum  ${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/* >${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/md5sums.txt
+  # sha1sum ${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/* >${REPO_DIR}/rtlsdr-bin-${WN}_${ZIP_POST}/bin/sha1sums.txt
 fi
