@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: prerequisites
     # pre-installed on ubuntu-1804: build-essential, git 2.28.0, cmake 3.10/3.17, make
     # pre-installed: clang 6.0 / 8 / 9, gcc/++ 7.5.0/8.4.0/9.3.0
@@ -28,7 +28,7 @@ jobs:
     - name: compress
       run: tar zcvf librtlsdr_build_ubuntu-${{ matrix.os }}.tar.gz --directory=build/src --exclude=CMakeFiles --exclude=*.cmake --exclude=Makefile --exclude=rtl_app_ver.h .
     - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: ubuntu_${{ matrix.os }}
         path: librtlsdr_build_ubuntu-${{ matrix.os }}.tar.gz
@@ -37,7 +37,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     #- name: prerequisites
     # pre-installed on macos-10.15: git 2.28.0, cmake 3.18.2, libusb 1.0.23
     # pre-installed: clang/LLVM 10.0.1, gcc/++ 8.4.0/9.3.0
@@ -47,7 +47,7 @@ jobs:
     - name: compress
       run: tar zcvf librtlsdr_build_macos-latest.tar.gz --directory=build/src --exclude=CMakeFiles --exclude=*.cmake --exclude=Makefile --exclude=rtl_app_ver.h .
     - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: macos_latest_build
         path: librtlsdr_build_macos-latest.tar.gz
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: prerequisites
       run: sudo apt -qq update && sudo apt -yqq install gcc-mingw-w64
     - name: build_w32_static
@@ -72,24 +72,24 @@ jobs:
       run: ls -lashR rtlsdr-bin-w64_dlldep
 
     - name: 'upload w32 static artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rtlsdr-bin-w32_static
         path: rtlsdr-bin-w32_static/bin/
     - name: 'upload w32 dlldep artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rtlsdr-bin-w32_dlldep
         path: |
           rtlsdr-bin-w32_dlldep/bin/
 
     - name: 'upload w64 static artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rtlsdr-bin-w64_static
         path: rtlsdr-bin-w64_static/bin/
     - name: 'upload w64 dlldep artifact'
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: rtlsdr-bin-w64_dlldep
         path: |
